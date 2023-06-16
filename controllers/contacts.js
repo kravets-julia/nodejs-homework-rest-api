@@ -17,10 +17,6 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  //   const {error} = addSchema.validate(req.body);
-  //   if (error) {
-  //     throw HttpError(400, error.message);
-  //   }
   const newContact = await contacts.addContact(req.body);
   res.status(201).json(newContact);
 };
@@ -32,15 +28,11 @@ const deleteById = async (req, res) => {
     throw HttpError(404, "Not found");
   }
   res.json({
-    message: "Delete success",
+    message: "Contact deleted",
   });
 };
 
 const updateById = async (req, res) => {
-  //   const {error} = addSchema.validate(req.body);
-  //   if (error) {
-  //     throw HttpError(400, error.message);
-  //   }
   const {contactId} = req.params;
   const updateOneContact = await contacts.updateContact(contactId, req.body);
   if (!updateOneContact) {
