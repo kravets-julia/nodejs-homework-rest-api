@@ -11,9 +11,12 @@ const contactSchema = new Schema(
     },
     email: {
       type: String,
+      unique: true,
+      required: true,
     },
     phone: {
       type: String,
+      required: true,
     },
     favorite: {
       type: Boolean,
@@ -24,8 +27,10 @@ const contactSchema = new Schema(
 );
 
 const addSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
+  name: Joi.string().min(3).max(30).required(),
+  email: Joi.string()
+    .email({minDomainSegments: 2, tlds: {allow: ["com", "net"]}})
+    .required(),
   phone: Joi.string().required(),
   favorite: Joi.boolean(),
 });
