@@ -17,14 +17,16 @@ router.post("/", authenticate, validateBody(schemas.addSchema), ctrl.add);
 router.delete("/:contactId", authenticate, isValidId, ctrl.deleteById);
 
 router.put(
-  "/:contactId", authenticate,
+  "/:contactId",
+  authenticate,
   isValidId,
   validateBody(schemas.addSchema),
   ctrl.updateById
 );
 
 router.patch(
-  "/:contactId/favorite", authenticate,
+  "/:contactId/favorite",
+  authenticate,
   isValidId,
   validateBody(schemas.updateFavoriteSchema),
   ctrl.updateFavorite

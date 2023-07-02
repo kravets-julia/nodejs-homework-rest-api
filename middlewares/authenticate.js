@@ -13,15 +13,14 @@ const authenticate = async (req, res, next) => {
     next(HttpError(401));
   }
   try {
-    const {id} = jwt.verify(token, SECRET_KEY);
-    const user = await User.findById(id);
-    if (!user) {
+    const {contactId} = jwt.verify(token, SECRET_KEY);
+    const user = await User.findById(contactId);
+    if (!user || !user.token || user.token !== token) {
       next(HttpError(401));
     }
     req.user = user;
     next();
-  } 
-  catch {
+  } catch {
     next(HttpError(401));
   }
 };

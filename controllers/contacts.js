@@ -3,7 +3,13 @@ const {HttpError, ctrlWrapper} = require("../helpers");
 
 const getAll = async (req, res) => {
   const {_id: owner} = req.user;
-  const list = await Contact.find({owner}, "name email phone favorite");
+  const {page = 1, limit = 20, favorite} = req.query;
+  const parameters = favorite ? {owner, favorite} : {owner};
+  const skip = (page - 1) * limit;
+  const list = await Contact.find(parameters, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  });
   res.json(list);
 };
 
